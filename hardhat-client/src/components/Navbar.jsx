@@ -31,7 +31,7 @@ const Navbar = ({ isWalletConnected }) => {
             </Stack>
             
             <Button variant='outlined'>
-                {isWalletConnected ? 'Wallet Connected' : 'Connect Wallet'}
+                {isWalletConnected ? 'Wallet Connected 🔐' : 'Connect Wallet 🔓'}
             </Button>
         </Toolbar>
     </nav>

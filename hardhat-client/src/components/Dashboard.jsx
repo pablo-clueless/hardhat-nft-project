@@ -112,6 +112,8 @@ const Dashboard = () => {
     e.preventDefault()
     const formData = { name, description, image: file }
     console.log('Upload successful!', formData)
+    
+    setInputValue(initialState => ({ ...initialState, name: '', description: '', file: null }))
   }
 
   const clearImage = () => setInputValue(initialState => ({ ...initialState, file: null }))
