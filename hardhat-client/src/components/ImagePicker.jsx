@@ -21,8 +21,8 @@ const useStyles = makeStyles({
         }
     },
     preview: {
-        width: '70%',
-        height: '80%',
+        width: '80%',
+        height: '75%',
         objectFit: 'cover',
         border: '1px solid var(--light)'
     },

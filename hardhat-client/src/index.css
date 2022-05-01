@@ -1,13 +1,14 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400&family=Rakkas&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400&family=Oswald:wght@600&display=swap');
 
 :root {
   --base: #d63d51;
   --light: #d2bdc2;
   --dark: #262550;
+  --mid: #57555b;
   --error: #c12110;
   --success: #18a73e;
   --base-font: 'Montserrat', sans-serif;
-  --bold-font: 'Rakkas', cursive;
+  --bold-font: 'Oswald', sans-serif;
 }
 
 * {

@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 // import { useMoralis } from 'react-moralis'
 import { useNavigate } from 'react-router-dom'
 // import Web3 from 'web3'
-import {} from '@mui/material'
+import { Stack, Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 
 import abi from '../contracts/ArtWork.json'
@@ -120,6 +120,10 @@ const Dashboard = () => {
 
   return (
     <div className={classes.main}>
+      <Stack direction='column' spacing={2}>
+        <Typography variant='h6' color='textPrimary'>Your Wallet Address: {yourWalletAddress}</Typography>
+      </Stack>
+
       <form onSubmit={submitHandler} className={classes.form}>
         <InputField type='text' label='Name' name='name' value={name} onChange={handleInputValue} placeholder='NFT Name' />
 

@@ -25,10 +25,7 @@ const Navbar = ({ isWalletConnected }) => {
   return (
     <nav className={classes.nav}>
         <Toolbar className={classes.toolbar}>
-            <Stack direction='row' alignItems='center' spacing={1}>
-                <Icon icon='gis:map-print' style={{ fontSize: '2rem' }} />
-                <h1 className={classes.h1}>NFT Minter</h1>
-            </Stack>
+            <h1 className={classes.h1}>NFT Minter</h1>
             
             <Button variant='outlined'>
                 {isWalletConnected ? 'Wallet Connected 🔐' : 'Connect Wallet 🔓'}

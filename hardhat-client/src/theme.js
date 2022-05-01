@@ -27,6 +27,10 @@ export const theme = createTheme({
                         borderColor: 'var(--light)',
                         boxShadow: '0 0 0 1.5rem rgba(210, 189, 194, 0.5)'
                     },
+                    '&:disabled': {
+                        background: 'var(--mid)',
+                        color: 'var(--light)',
+                    },
                     '@keyrames pulse': {
                         '0%': {
                             boxShadow: '0 0 0 0 var(--light)'
@@ -72,11 +76,10 @@ export const theme = createTheme({
     },
     palette: {
         text: {
-            primary: '#262628',
-            secondary: '#f78d6a',
-            // alternate: '',
-            error: '#F02525',
-            success: '#12f14e'
+            primary: '#d63d51',
+            secondary: '#262550',
+            error: '#c12110',
+            success: '#18a73e',
         }
     }
 })
