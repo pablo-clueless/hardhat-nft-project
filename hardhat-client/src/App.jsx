@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { ThemeProvider } from '@mui/material'
 // import { useMoralis } from 'react-moralis'
 
-import { Dashboard, Login, Navbar } from './components'
+import { Dashboard, Footer, Login, Navbar } from './components'
 import { theme } from './theme'
 
 const App = () => {
@@ -18,6 +18,7 @@ const App = () => {
           <Route path='/dashboard' element={<Dashboard />} />
         </Routes>
       </main>
+      <Footer />
       </ThemeProvider>
     </Router>
   )

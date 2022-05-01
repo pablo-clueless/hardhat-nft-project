@@ -25,7 +25,7 @@ export const theme = createTheme({
                     '&:active': {
                         animation: 'pulse 1s infinite',
                         borderColor: 'var(--light)',
-                        boxShadow: '0 0 0 2rem var(--base)'
+                        boxShadow: '0 0 0 1.5rem rgba(210, 189, 194, 0.5)'
                     },
                     '@keyrames pulse': {
                         '0%': {

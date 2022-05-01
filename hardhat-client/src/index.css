@@ -2,11 +2,10 @@
 
 :root {
   --base: #d63d51;
-  --alt: #b328a7;
   --light: #d2bdc2;
   --dark: #262550;
-  --error: #;
-  --success: #;
+  --error: #c12110;
+  --success: #18a73e;
   --base-font: 'Montserrat', sans-serif;
   --bold-font: 'Rakkas', cursive;
 }
@@ -18,7 +17,13 @@
 }
 
 body {
+  width: 100vw;
+  height: 100vh;
+  background: url('/assets/eth.svg') var(--dark) no-repeat center/cover;
+  background-size: 50% 80%;
+  background-blend-mode: exclusion;
   font-family: var(--base-font);
+  overflow-y: hidden;
 }
 
 h1, h2, h3,

@@ -1,3 +1,7 @@
+export { default as Buttons } from './Buttons'
 export { default as Dashboard } from './Dashboard'
+export { default as Footer } from './Footer'
+export { default as ImagePicker } from './ImagePicker'
+export { default as InputField } from './InputField'
 export { default as Login } from './Login'
 export { default as Navbar } from './Navbar'
