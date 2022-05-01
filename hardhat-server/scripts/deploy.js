@@ -3,11 +3,11 @@ const hre = require('hardhat')
 const main = async () => {
     const [owner] = await hre.ethers.getSigners()
     const contractFactory = await hre.ethers.getContractFactory('MemeCoin')
-    const contract = await contractFactory.deploy()
-    await contract.deployed()
+    const nftContract = await contractFactory.deploy()
+    await nftContract.deployed()
 
-    console.log('MemeCoin Contract deployed to:', contract.address)
-    console.log('MemeCoin Contract owner address:', owner.address)
+    console.log('NFT Contract deployed to:', nftContract.address)
+    console.log('NFT Contract owner address:', owner.address)
 }
 
 main()
