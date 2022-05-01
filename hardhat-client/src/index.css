@@ -1,13 +1,27 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400&family=Rakkas&display=swap');
+
+:root {
+  --base: #d63d51;
+  --alt: #b328a7;
+  --light: #d2bdc2;
+  --dark: #262550;
+  --error: #;
+  --success: #;
+  --base-font: 'Montserrat', sans-serif;
+  --bold-font: 'Rakkas', cursive;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--base-font);
+}
+
+h1, h2, h3,
+h4, h5, h6 {
+  font-family: var(--bold-font);
 }

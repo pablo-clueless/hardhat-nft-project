@@ -1,7 +1,7 @@
 import React from 'react'
 import { Button, Stack, Toolbar, Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
-// import { Icon } from '@iconify/react'
+import { Icon } from '@iconify/react'
 
 const useStyles = makeStyles({
     nav: {
@@ -26,11 +26,11 @@ const Navbar = ({ isWalletConnected }) => {
     <nav className={classes.nav}>
         <Toolbar className={classes.toolbar}>
             <Stack direction='row' alignItems='center' spacing={1}>
-                <Icon icon='logos:ethereum' style={{ fontSize: '2rem' }} />
-                <h1 className={classes.h1}>ETH</h1>
+                <Icon icon='gis:map-print' style={{ fontSize: '2rem' }} />
+                <h1 className={classes.h1}>NFT Minter</h1>
             </Stack>
             
-            <Button variant={isWalletConnected ? 'outlined' : 'text' }>
+            <Button variant='outlined'>
                 {isWalletConnected ? 'Wallet Connected' : 'Connect Wallet'}
             </Button>
         </Toolbar>
