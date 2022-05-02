@@ -13,11 +13,8 @@ const useStyles = makeStyles({
         alignItems: 'center',
         justifyContent: 'center',
         margin: '1rem 0',
-        '&:hover' : {
-            borderColor: 'black'
-        },
-        '&:active': {
-            borderColor: 'var(--light)'
+        '&:hover': {
+            border: '2px solid var(--light)'
         }
     },
     preview: {
@@ -57,7 +54,7 @@ const ImagePicker = ({ isValid, name, onChange, onClick, src }) => {
         {!isValid ?
         <label className={classes.label}>
                 <p><CloudUploadOutlined /> Upload file</p>
-                <i>.png, .jpg, .jpeg, .svg, .webp, .gif and .tiff only.</i>
+                <i>.png, .jpg, .jpeg, .svg, .webp, .gif & .tiff only.</i>
             <input className={classes.input} type="file" name={name} onChange={onChange} />
         </label>
         :   <>

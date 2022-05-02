@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import Moralis from 'moralis'
-import { useMoralis } from 'react-moralis'
 import { useNavigate } from 'react-router-dom'
 import { Stack, Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
@@ -32,38 +30,22 @@ const useStyles = makeStyles({
   }
 })
 
-const Dashboard = () => {
-  const { isAuthenticated, logout, user } = useMoralis()
+const Dashboard = ({ isWalletConnected, minterAddress }) => {
   const navigate = useNavigate()
   const classes = useStyles()
 
   const [inputValue, setInputValue] = useState({ name: '', description: '', file: null })
-  const [minterAddress, setMinterAddress] = useState(null)
   const [error, setError] = useState(null)
   const [previewUrl, setPreviewUrl] = useState('')
-
+  const [urlArr, setUrlArr] = useState([])
 
   const { name, description, file } = inputValue
 
   useEffect(() => {
-    if(!isAuthenticated) {
+    if(!isWalletConnected) {
       navigate('/')
     }
-  },[isAuthenticated])
-
-  const getMinterAddress = async () => {
-    try {
-      if (window.ethereum) {
-        const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' })
-        const account = accounts[0]
-        setMinterAddress(account)
-      } else {
-        setError('Please install a MetaMask wallet to use our bank.')
-      }
-    } catch (error) {
-      setError(error)
-    }
-  }
+  },[isWalletConnected])
 
   const handleInputValue = (e) => {
     setInputValue(initialState => ({ ...initialState, [e.target.name]: e.target.value}))
@@ -93,34 +75,19 @@ const Dashboard = () => {
     if(!name || !description || !file) return alert('Plese fill all fields!')
     
     try {
-        const file1 = new Moralis.File(file.name, file)
-        await file1.saveIPFS()
-        const file1Url = file1.ipfs()
-        const metadata = { name, description, image: file1Url }
-        const metadataBase64 = btoa(unescape(encodeURIComponent(JSON.stringify(metadata))))
-        const file2 = new Moralis.File(`${name}metadata.json`, { base64: metadataBase64 })
-
-        await file2.saveIPFS()
-        const metadataUrl = file2.ipfs()
-
         if(window.ethereum) {
           const provider = new ethers.providers.Web3Provider(window.ethereum)
           const signer = provider.getSigner()
           const contract = new ethers.Contract(contractAdddress, contractABI, signer)
-          console.log({contract, metadataUrl})
+          console.log({contract})
         } else {
           setError('Please install a MetaMask wallet!')
         }
     } catch (error) {
       setError(error)
       console.log(error)
-      alert('an error occurred!')
     }
   }
-
-  useEffect(() => {
-    getMinterAddress()
-  },[])
 
   const clearImage = () => setInputValue(initialState => ({ ...initialState, file: null }))
 

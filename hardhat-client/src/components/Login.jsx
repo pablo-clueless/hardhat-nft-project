@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react'
-import { useMoralis } from 'react-moralis'
 import { useNavigate } from 'react-router-dom'
 import { Button } from '@mui/material'
 import { makeStyles } from '@mui/styles'
@@ -15,21 +14,20 @@ const useStyles = makeStyles({
   }
 })
 
-const Login = () => {
-    const { authenticate, isAuthenticated, logout } = useMoralis()
+const Login = ({ isWalletConnected, connectWallet }) => {
     const navigate = useNavigate()
 
     const classes = useStyles()
   
     useEffect(() => {
-      if(isAuthenticated){
+      if(isWalletConnected){
         navigate('/dashboard')
       }
-    },[isAuthenticated])
+    },[isWalletConnected])
 
   return (
     <div className={classes.main}>
-        <Button variant='contained' onClick={() => authenticate()}>
+        <Button variant='contained' onClick={() => connectWallet}>
           Login With MetaMask
         </Button>
     </div>

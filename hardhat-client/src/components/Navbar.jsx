@@ -19,7 +19,7 @@ const useStyles = makeStyles({
     }
 })
 
-const Navbar = ({ isWalletConnected }) => {
+const Navbar = ({ isWalletConnected, logout }) => {
     const classes = useStyles()
 
   return (
