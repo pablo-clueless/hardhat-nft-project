@@ -2,7 +2,7 @@ const hre = require('hardhat')
 
 const main = async () => {
     const [owner] = await hre.ethers.getSigners()
-    const contractFactory = await hre.ethers.getContractFactory('MemeCoin')
+    const contractFactory = await hre.ethers.getContractFactory('Collectible')
     const nftContract = await contractFactory.deploy()
     await nftContract.deployed()
 

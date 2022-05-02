@@ -10,7 +10,7 @@ import abi from '../contracts/ArtWork.json'
 import { Buttons, ImagePicker, InputField} from '../components'
 
 const contractAdddress = import.meta.env.VITE_CONTRACT_ADDRESS
-const contractABI = abi.abi
+const contractABI = abi
 
 const useStyles = makeStyles({
   main: {
@@ -107,7 +107,7 @@ const Dashboard = () => {
           const provider = new ethers.providers.Web3Provider(window.ethereum)
           const signer = provider.getSigner()
           const contract = new ethers.Contract(contractAdddress, contractABI, signer)
-          console.log(contract)
+          console.log({contract, metadataUrl})
         } else {
           setError('Please install a MetaMask wallet!')
         }

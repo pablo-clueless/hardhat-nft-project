@@ -29,20 +29,23 @@ const useStyles = makeStyles({
     label: {
         width: '100%',
         height: '100%',
-        display: 'grid',
-        placeItems:'center',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        gap: '1rem',
         color: 'var(--light)',
         textAlign: 'center',
+        '& p': {
+            display: 'flex',
+            alignItems: 'center',
+            gap: '1rem',
+        }
     },
     input: {
         width: '100%',
         height: '100%',
         display: 'none'
-    },
-    text: {
-        display: 'flex',
-        alignItems: 'center',
-        gap: '1rem',
     }
 })
 
@@ -53,9 +56,8 @@ const ImagePicker = ({ isValid, name, onChange, onClick, src }) => {
     <div className={classes.imageControl}>
         {!isValid ?
         <label className={classes.label}>
-                <p className={classes.text}>
-                    <CloudUploadOutlined /> Upload file
-                </p>
+                <p><CloudUploadOutlined /> Upload file</p>
+                <i>.png, .jpg, .jpeg, .svg, .webp, .gif and .tiff only.</i>
             <input className={classes.input} type="file" name={name} onChange={onChange} />
         </label>
         :   <>
