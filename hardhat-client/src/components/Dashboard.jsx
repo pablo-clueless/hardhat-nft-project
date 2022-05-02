@@ -1,19 +1,16 @@
 import React, { useEffect, useState } from 'react'
-// import Moralis from 'moralis'
-// import { useMoralis } from 'react-moralis'
+import Moralis from 'moralis'
+import { useMoralis } from 'react-moralis'
 import { useNavigate } from 'react-router-dom'
-// import Web3 from 'web3'
 import { Stack, Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
+import { ethers } from 'ethers'
 
 import abi from '../contracts/ArtWork.json'
 import { Buttons, ImagePicker, InputField} from '../components'
-import { useRef } from 'react'
 
 const contractAdddress = import.meta.env.VITE_CONTRACT_ADDRESS
 const contractABI = abi.abi
-
-// const web3 = new Web3(window.ethereum)
 
 const useStyles = makeStyles({
   main: {
@@ -36,24 +33,37 @@ const useStyles = makeStyles({
 })
 
 const Dashboard = () => {
-  // const { isAuthenticated, logout, user } = useMoralis()
+  const { isAuthenticated, logout, user } = useMoralis()
   const navigate = useNavigate()
   const classes = useStyles()
-  const imageRef = useRef()
 
   const [inputValue, setInputValue] = useState({ name: '', description: '', file: null })
-  const [yourWalletAddress, setYourWalletAddress] = useState(null)
+  const [minterAddress, setMinterAddress] = useState(null)
   const [error, setError] = useState(null)
   const [previewUrl, setPreviewUrl] = useState('')
 
 
   const { name, description, file } = inputValue
 
-  // useEffect(() => {
-  //   if(!isAuthenticated) {
-  //     navigate('/')
-  //   }
-  // },[isAuthenticated])
+  useEffect(() => {
+    if(!isAuthenticated) {
+      navigate('/')
+    }
+  },[isAuthenticated])
+
+  const getMinterAddress = async () => {
+    try {
+      if (window.ethereum) {
+        const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' })
+        const account = accounts[0]
+        setMinterAddress(account)
+      } else {
+        setError('Please install a MetaMask wallet to use our bank.')
+      }
+    } catch (error) {
+      setError(error)
+    }
+  }
 
   const handleInputValue = (e) => {
     setInputValue(initialState => ({ ...initialState, [e.target.name]: e.target.value}))
@@ -77,51 +87,49 @@ const Dashboard = () => {
     }
   }
 
-  // const submitHandler = async (e) => {
-  //   e.preventDefault()
-
-  //   if(!name || !description || !file) return alert('Plese fill all fields!')
-    
-  //   try {
-  //       const file1 = new Moralis.File(file.name, file)
-  //       await file1.saveIPFS()
-  //       const file1Url = file1.ipfs()
-
-  //       const metadata = { name, description, image: file1Url }
-
-  //       const file2 = new Moralis.File(`${name}metadata.json`, {
-  //         base64: Buffer.from(JSON.stringify(metadata)).toString(base64)
-  //       })
-
-  //       await file2.saveIPFS()
-  //       const metadataUrl = file2.ipfs()
-
-  //       const contract = web3.eth.Contract(contractABI ,contractAdddress)
-  //       const res = await contract.methods.mint(metadataUrl).send({ from: user.get('ethAddress') })
-  //       const tokenId = res.events.Transfer.returnValues.tokenId
-
-  //       alert(`NFT minted successfully. Contract Address - ${contractAdddress}, Token ID - ${tokenId}`)
-  //   } catch (error) {
-  //     setError(error)
-  //     console.log(error)
-  //     alert('an error occurred!')
-  //   }
-  // }
-
-  const submitHandler = (e) =>{
+  const submitHandler = async (e) => {
     e.preventDefault()
-    const formData = { name, description, image: file }
-    console.log('Upload successful!', formData)
+
+    if(!name || !description || !file) return alert('Plese fill all fields!')
     
-    setInputValue(initialState => ({ ...initialState, name: '', description: '', file: null }))
+    try {
+        const file1 = new Moralis.File(file.name, file)
+        await file1.saveIPFS()
+        const file1Url = file1.ipfs()
+        const metadata = { name, description, image: file1Url }
+        const metadataBase64 = btoa(unescape(encodeURIComponent(JSON.stringify(metadata))))
+        const file2 = new Moralis.File(`${name}metadata.json`, { base64: metadataBase64 })
+
+        await file2.saveIPFS()
+        const metadataUrl = file2.ipfs()
+
+        if(window.ethereum) {
+          const provider = new ethers.providers.Web3Provider(window.ethereum)
+          const signer = provider.getSigner()
+          const contract = new ethers.Contract(contractAdddress, contractABI, signer)
+          console.log(contract)
+        } else {
+          setError('Please install a MetaMask wallet!')
+        }
+    } catch (error) {
+      setError(error)
+      console.log(error)
+      alert('an error occurred!')
+    }
   }
+
+  useEffect(() => {
+    getMinterAddress()
+  },[])
 
   const clearImage = () => setInputValue(initialState => ({ ...initialState, file: null }))
 
   return (
     <div className={classes.main}>
-      <Stack direction='column' spacing={2}>
-        <Typography variant='h6' color='textPrimary'>Your Wallet Address: {yourWalletAddress}</Typography>
+      <Stack direction='column' spacing={2} textAlign='center'>
+        <Typography variant='body1' color='textPrimary'>
+          Your Wallet Address: {minterAddress}
+        </Typography>
       </Stack>
 
       <form onSubmit={submitHandler} className={classes.form}>
