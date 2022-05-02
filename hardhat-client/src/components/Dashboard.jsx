@@ -30,7 +30,7 @@ const useStyles = makeStyles({
   }
 })
 
-const Dashboard = ({ isWalletConnected, minterAddress }) => {
+const Dashboard = ({ isWalletConnected, connectWallet, minterAddress }) => {
   const navigate = useNavigate()
   const classes = useStyles()
 
@@ -43,7 +43,7 @@ const Dashboard = ({ isWalletConnected, minterAddress }) => {
 
   useEffect(() => {
     if(!isWalletConnected) {
-      navigate('/')
+      connectWallet()
     }
   },[isWalletConnected])
 

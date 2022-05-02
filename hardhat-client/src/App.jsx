@@ -35,8 +35,8 @@ const App = () => {
       <Navbar isWalletConnected={isWalletConnected} />
       <main>
         <Routes>
-          <Route path='/' element={<Dashboard isWalletConnected={isWalletConnected} minterAddress={minteraddress} />} />
-          <Route path='/minted-nft' element={<Minted />} />
+          <Route path='/' element={<Dashboard isWalletConnected={isWalletConnected} minterAddress={minteraddress} connectWallet={checkIfWalletIsConnected} />} />
+          <Route path='/minted-nft' element={<Minted minterAddress={minteraddress} />} />
         </Routes>
       </main>
       <Footer />
