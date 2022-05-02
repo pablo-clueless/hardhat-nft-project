@@ -6,11 +6,11 @@ import { Stack, Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import { ethers } from 'ethers'
 
-import abi from '../contracts/ArtWork.json'
+import abi from '../contracts/Collectible.json'
 import { Buttons, ImagePicker, InputField} from '../components'
 
 const contractAdddress = import.meta.env.VITE_CONTRACT_ADDRESS
-const contractABI = abi
+const contractABI = abi.abi
 
 const useStyles = makeStyles({
   main: {
