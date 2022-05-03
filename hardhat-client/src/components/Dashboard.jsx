@@ -5,7 +5,7 @@ import { makeStyles } from '@mui/styles'
 import { ethers } from 'ethers'
 
 import abi from '../contracts/Collectible.json'
-import { Buttons, ImagePicker, InputField} from '../components'
+import { Buttons, ImagePicker, InputField, Modal } from '../components'
 
 const contractAdddress = import.meta.env.VITE_CONTRACT_ADDRESS
 const contractABI = abi.abi
@@ -65,7 +65,7 @@ const Dashboard = ({ isWalletConnected, connectWallet, minterAddress }) => {
       }
       fileReader.readAsDataURL(pickedFile)
     } else {
-        return alert('Wrong file type!')
+        return setError('Wrong file type!')
     }
   }
 
@@ -73,6 +73,7 @@ const Dashboard = ({ isWalletConnected, connectWallet, minterAddress }) => {
     e.preventDefault()
 
     if(!name || !description || !file) return alert('Plese fill all fields!')
+    console.log({name, description, file})
     
     try {
         if(window.ethereum) {
@@ -80,6 +81,8 @@ const Dashboard = ({ isWalletConnected, connectWallet, minterAddress }) => {
           const signer = provider.getSigner()
           const contract = new ethers.Contract(contractAdddress, contractABI, signer)
           console.log({contract})
+          // const txn = await contract.mintNFT(minterAddress)
+          // const res = await txn.wait()
         } else {
           setError('Please install a MetaMask wallet!')
         }
@@ -90,9 +93,11 @@ const Dashboard = ({ isWalletConnected, connectWallet, minterAddress }) => {
   }
 
   const clearImage = () => setInputValue(initialState => ({ ...initialState, file: null }))
+  const clearError = () => setError(null)
 
   return (
     <div className={classes.main}>
+      {error && <Modal error={error} onClear={clearError} />}
       <Stack direction='column' spacing={2} textAlign='center'>
         <Typography variant='body1' color='textPrimary'>
           Your Wallet Address: {minterAddress}
