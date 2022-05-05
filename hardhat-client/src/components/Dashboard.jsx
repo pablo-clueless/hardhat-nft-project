@@ -37,9 +37,11 @@ const Dashboard = ({ isWalletConnected, connectWallet, minterAddress }) => {
   const [inputValue, setInputValue] = useState({ name: '', description: '', file: null })
   const [error, setError] = useState(null)
   const [previewUrl, setPreviewUrl] = useState('')
-  const [urlArr, setUrlArr] = useState([])
+  const [transacting, setTransacting] = useState({ minting: false, minted: false, })
+  const [mintedNFTAddrress, setMintedNFTAddrress] = useState('')
 
   const { name, description, file } = inputValue
+  const { minting, minted } = transacting
 
   useEffect(() => {
     if(!isWalletConnected) {
@@ -72,20 +74,25 @@ const Dashboard = ({ isWalletConnected, connectWallet, minterAddress }) => {
   const submitHandler = async (e) => {
     e.preventDefault()
 
-    if(!name || !description || !file) return alert('Plese fill all fields!')
-    console.log({name, description, file})
-    
+    setTransacting(initialState => ({ ...initialState, minting: true }))
     try {
-        if(window.ethereum) {
-          const provider = new ethers.providers.Web3Provider(window.ethereum)
-          const signer = provider.getSigner()
-          const contract = new ethers.Contract(contractAdddress, contractABI, signer)
-          console.log({contract})
-          // const txn = await contract.mintNFT(minterAddress)
-          // const res = await txn.wait()
-        } else {
-          setError('Please install a MetaMask wallet!')
-        }
+      const jsonFile = JSON.stringify({
+        name, description,
+        image: 'ipfs://QmX9oPbd4VhkovBt4ddmh4UxLZtWTSG2qGuG4D8qE2DJ4T'
+      })
+      
+      if(window.ethereum) {
+        const provider = new ethers.providers.Web3Provider(window.ethereum)
+        const signer = provider.getSigner()
+        const contract = new ethers.Contract(contractAdddress, contractABI, signer)
+        const txn = await contract.mintNFT(minterAddress, jsonFile)
+        const res = await txn.wait()
+        setMintedNFTAddrress(res.transactionHash)
+        setTransacting(initialState => ({ ...initialState, minting: false, minted: true }))
+        setInputValue(initialState => ({ ...initialState, name: '', description: '', file: null }))
+      } else {
+        setError('Please install a MetaMask wallet!')
+      }
     } catch (error) {
       setError(error)
       console.log(error)
@@ -94,10 +101,13 @@ const Dashboard = ({ isWalletConnected, connectWallet, minterAddress }) => {
 
   const clearImage = () => setInputValue(initialState => ({ ...initialState, file: null }))
   const clearError = () => setError(null)
+  const closeMinted = () => setTransacting(initialState => ({ ...initialState, minted: false, minting: false }))
 
   return (
     <div className={classes.main}>
-      {error && <Modal error={error} onClear={clearError} />}
+      {error && <Modal message={error} onClear={clearError} />}
+      {minting && <Modal message='Minting your NFT' onClear={closeMinted} /> }
+      {minted && <Modal message='NFT Minted' onClear={closeMinted} />}
       <Stack direction='column' spacing={2} textAlign='center'>
         <Typography variant='body1' color='textPrimary'>
           Your Wallet Address: {minterAddress}
@@ -113,6 +123,12 @@ const Dashboard = ({ isWalletConnected, connectWallet, minterAddress }) => {
 
         <Buttons type='submit' text='Mint NFT' disabled={!name || !description || !file} />
       </form>
+
+      {mintedNFTAddrress && <Typography variant='subtitle1'>
+        <a href={`https://rinkeby.etherscan.io/tx/${mintedNFTAddrress}`}>
+          View transaction on Rinkeby Etherscan to claim 
+        </a>
+      </Typography>}
     </div>
   )
 }

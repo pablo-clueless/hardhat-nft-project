@@ -29,14 +29,14 @@ modal: {
   }
 })
 
-const Modal = ({ error, onClear }) => {
+const Modal = ({ message, onClear }) => {
   const classes = useStyles()
 
   return (
     <div className={classes.modalContainer}>
       <div className={classes.modal}>
         <Typography variant='body1' color='text'>
-          {error}
+          {message}
         </Typography>
         <Button variant='contained' onClick={onClear}>
             close
