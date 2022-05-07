@@ -60,7 +60,6 @@ const Dashboard = ({ isWalletConnected, connectWallet, minterAddress }) => {
     const { type } = pickedFile
     if(type == 'image/png' || type == 'image/svg' || type == 'image/jpeg' || type == 'image/gif' || type == 'image/tiff') {
       setInputValue(initialState => ({ ...initialState, file: pickedFile }))
-
       const fileReader = new FileReader()
       fileReader.onload = () => {
         setPreviewUrl(fileReader.result)
@@ -76,18 +75,15 @@ const Dashboard = ({ isWalletConnected, connectWallet, minterAddress }) => {
 
     setTransacting(initialState => ({ ...initialState, minting: true }))
     try {
-      const jsonFile = JSON.stringify({
-        name, description,
-        image: 'ipfs://QmX9oPbd4VhkovBt4ddmh4UxLZtWTSG2qGuG4D8qE2DJ4T'
-      })
+      const jsonFile = JSON.stringify({ name, description, file: previewUrl })
       
       if(window.ethereum) {
-        const provider = new ethers.providers.Web3Provider(window.ethereum)
-        const signer = provider.getSigner()
-        const contract = new ethers.Contract(contractAdddress, contractABI, signer)
-        const txn = await contract.mintNFT(minterAddress, jsonFile)
-        const res = await txn.wait()
-        setMintedNFTAddrress(res.transactionHash)
+        // const provider = new ethers.providers.Web3Provider(window.ethereum)
+        // const signer = provider.getSigner()
+        // const contract = new ethers.Contract(contractAdddress, contractABI, signer)
+        // const txn = await contract.mintNFT(minterAddress, jsonFile)
+        // const res = await txn.wait()
+        // setMintedNFTAddrress(res.transactionHash)
         setTransacting(initialState => ({ ...initialState, minting: false, minted: true }))
         setInputValue(initialState => ({ ...initialState, name: '', description: '', file: null }))
       } else {
