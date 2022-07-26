@@ -16,14 +16,16 @@ const initialState = {
 const contractABI = abi.abi
 const contractAdddress = import.meta.env.VITE_CONTRACT_ADDRESS
 
-const Home = ({isWalletConnected, minterAddress,connectWallet}) => {
+const Home = ({isWalletConnected, minterAddress,connectWallet,openSeaProfile}) => {
     const { currentColor } = useProviderContext()
     const { inputs, handleInputChange } = useFormInputs(initialState)
     const { uploading, saveNFT, nftError, clearNFTError} = useNFTStorage()
     const [imageFile, setImageFile] = useState(null)
     const [previewURL, setPreviewURL] = useState(null)
+    const [imageURL, setImageURL] = useState('')
     const [isValid, setIsValid] = useState(false)
     const [error, setError] = useState(null)
+    const [loadingStates, setLoadingStates] = useState({minting: false, done: false, hash: '', address: ''})
     
     useEffect(() => {
         !isWalletConnected && connectWallet()
@@ -56,26 +58,30 @@ const Home = ({isWalletConnected, minterAddress,connectWallet}) => {
 
         try {
             const data = await saveNFT(imageFile)
-            console.log(data)
+            const { value: { cid }} = data
+            setImageURL(cid)
         } catch (error) {}
         
-        // try {
-        //     const jsonFile = JSON.stringify({name,description,image})
+        setLoadingStates({...loadingStates, minting: true})
+        try {
+            const JSONFile = JSON.stringify({name, description, image: `https://ipfs/${imageURL}`})
             
-        //     if(window.ethereum) {
-        //       const provider = new ethers.providers.Web3Provider(window.ethereum)
-        //       const signer = provider.getSigner()
-        //       const contract = new ethers.Contract(contractAdddress, contractABI, signer)
-        //       const txn = await contract.mintNFT(minterAddress, jsonFile)
-        //       const res = await txn.wait()
-        //       console.log(res)
-        //     } else {
-        //       setError('Please install a MetaMask wallet!')
-        //     }
-        // } catch (error) {
-        //     setError(error)
-        //     console.log(error)
-        // }
+            if(window.ethereum) {
+              const provider = new ethers.providers.Web3Provider(window.ethereum)
+              const signer = provider.getSigner()
+              const contract = new ethers.Contract(contractAdddress, contractABI, signer)
+              const txn = await contract.mintNFT(minterAddress, JSONFile)
+              const res = await txn.wait()
+              console.log(res)
+              setLoadingStates({...loadingStates, minting: false, done: true, hash: res.transactionHash, address: res.to})
+              resetValues()
+            } else {
+              setError('Please install a MetaMask wallet!')
+            }
+        } catch (error) {
+            setError(error)
+            console.log(error)
+        }
     }
 
     const clearImage = () => {
@@ -88,22 +94,22 @@ const Home = ({isWalletConnected, minterAddress,connectWallet}) => {
         setIsValid(false)
     }
 
-    let timer
-    const timerFunc = () => {
-        clearTimeout(timer)
-        timer = setTimeout(() => {
-            setError(null)
-        }, 10000)
+    const resetValues = () => {
+        setImageFile(null)
+        setPreviewURL(null)
+        setImageURL('')
+        setIsValid(false)
+        inputs.name = ''
+        inputs.description = ''
     }
-
-    useEffect(() => {
-        timerFunc()
-    },[error])
 
   return (
     <>
     {error && <Alert type='warning' message={error} onClose={clearError} />}
-    {nftError && <Alert type='error' message={nftError} onClose={clearError} />}
+    {nftError && <Alert type='error' message={nftError} onClose={clearNFTError} />}
+    {uploading && <Alert type='info' message='Uploading...' />}
+    {loadingStates.minting && <Alert type='info' message='Minting...' />}
+    {loadingStates.done && <Modal title='Success' address={loadingStates.address} hash={loadingStates.hash} onClose={() => setLoadingStates({...loadingStates, done: false})} />}
     <div className='w-full flex flex-col items-center'>
         <div className='text-center mt-4 mb-12'>
             <p className='text-xl text-white'>Your ETH Address</p>
@@ -117,6 +123,14 @@ const Home = ({isWalletConnected, minterAddress,connectWallet}) => {
             <ImagePicker isValid={isValid} name='image' onChange={handleImageSelect} onClick={clearImage} src={previewURL} />
             <Button type='submit' text='Submit' />
         </form>
+        <div className='my-4'>
+            <p className="text-center" style={{color: currentColor}}>
+                <span className="text-white mt-5">Your NFT will be available at: </span>
+                <a href={openSeaProfile} target="_blank" rel="noopener noreferrer">
+                    testnet.openSea.opensea.io
+                </a>
+            </p>
+        </div>
         <Footer />
     </div>
     </>

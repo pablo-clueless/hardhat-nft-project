@@ -1,5 +1,7 @@
 import { useState } from 'react'
 
+const token = import.meta.env.VITE_NFT_TOKEN
+
 export const useNFTStorage = () => {
     const [uploading, setUploading] = useState(false)
     const [retrieving, setRetrieving] = useState(false)
@@ -13,6 +15,7 @@ export const useNFTStorage = () => {
                 method: 'POST',
                 body,
                 headers: {
+                    'Authorization': `Bearer ${token}`,
                     'Content-Type': 'image/*'
                 }
             })
@@ -23,7 +26,7 @@ export const useNFTStorage = () => {
             setUploading(false)
             return data
         } catch (error) {
-            setError(error)
+            setError(error.message)
             setUploading(false)
         }
     }
@@ -31,7 +34,12 @@ export const useNFTStorage = () => {
     const retrieveNFT = async(cid) => {
         setRetrieving(true)
         try {
-            const response = await fetch(`https://api.nft.storage/${cid}`)
+            const response = await fetch(`https://api.nft.storage/${cid}`,{
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                }
+            })
             const data = await response.json()
             if(!response.ok) {
                 throw new Error(data.message)
@@ -39,7 +47,7 @@ export const useNFTStorage = () => {
             setRetrieving(false)
             return data
         } catch (error) {
-            setError(error)
+            setError(error.message)
             setRetrieving(false)
         }
         
@@ -49,7 +57,11 @@ export const useNFTStorage = () => {
         setDeleting(true)
         try {
             const response = await fetch(`https://api.nft.storage/${cid}`,{
-                method: 'DELETE'
+                method: 'DELETE',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                }
             })
             const data = await response.json()
             if(!response.ok) {
@@ -58,7 +70,7 @@ export const useNFTStorage = () => {
             setDeleting(false)
             return data
         } catch (error) {
-            setError(error)
+            setError(error.message)
             setDeleting(false)
         }
     }

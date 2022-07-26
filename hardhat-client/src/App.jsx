@@ -7,6 +7,7 @@ import { Navbar, ThemeSettings } from './components'
 const App = () => {
   const [isWalletConnected, setIsWalletConnected] = useState(false)
   const [minteraddress, setMinterAddress] = useState('')
+  const [openSeaProfile, setOpenSeaProfile] = useState('')
 
   const checkIfWalletIsConnected = async () => {
     try {
@@ -15,6 +16,8 @@ const App = () => {
         const account = accounts[0]
         setIsWalletConnected(true)
         setMinterAddress(account)
+
+        setOpenSeaProfile(`https://testnet.opensea.io/${account}?tab=activity`)
       } else {
         setError('Please install a MetaMask wallet to use our bank.')
       }
@@ -32,7 +35,7 @@ const App = () => {
       <Router>
         <Navbar isWalletConnected={isWalletConnected} />
         <Routes>
-          <Route path='/' element={<Home isWalletConnected={isWalletConnected} minterAddress={minteraddress} connectWallet={checkIfWalletIsConnected} />} />
+          <Route path='/' element={<Home isWalletConnected={isWalletConnected} minterAddress={minteraddress} connectWallet={checkIfWalletIsConnected} openSeaProfile={openSeaProfile} />} />
           <Route path='/nfts' element={<Showcase isWalletConnected={isWalletConnected} minterAddress={minteraddress} connectWallet={checkIfWalletIsConnected} />} />
           <Route path='/nfts/:id' element={<NFT isWalletConnected={isWalletConnected} minterAddress={minteraddress} connectWallet={checkIfWalletIsConnected} />} />
         </Routes>
