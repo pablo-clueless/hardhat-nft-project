@@ -126,8 +126,8 @@ const Home = ({isWalletConnected, minterAddress,connectWallet,openSeaProfile}) =
         <div className='my-4'>
             <p className="text-center" style={{color: currentColor}}>
                 <span className="text-white mt-5">Your NFT will be available at: </span>
-                <a href={openSeaProfile} target="_blank" rel="noopener noreferrer">
-                    testnet.openSea.opensea.io
+                <a href={openSeaProfile} target="_blank" rel="noopener noreferrer" className='underline underline-offset-2'>
+                    https://testnet.opensea.io
                 </a>
             </p>
         </div>
