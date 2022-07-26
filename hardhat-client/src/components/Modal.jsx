@@ -1,46 +1,23 @@
 import React from 'react'
-import { Button, Typography } from '@mui/material'
-import { makeStyles } from '@mui/styles'
 
-const useStyles = makeStyles({
-  modalContainer: {
-    // width: '100vw',
-    // height: '100vh',
-    position: 'absolute',
-    top: 90,
-    left: '30%',
-    display: 'grid',
-    placeItems: 'center',
-    // backgroundColor: 'rgba(0, 0, 0, 0.6)',
-    zIndex: 2,
-},
-modal: {
-    width: '40vw',
-    display: 'grid',
-    placeItems: 'center',
-    gap: '1rem',
-    textAlign: 'center',
-    wordBreak: 'break-word',
-    backgroundColor: 'var(--light)',
-    color: 'var(--error)',
-    padding: '1rem 0.5rem',
-    borderRadius: '5px',
-    transition: '0.5s ease',
-  }
-})
-
-const Modal = ({ message, onClear }) => {
-  const classes = useStyles()
+const Modal = ({message,onClear,onConfirm}) => {
 
   return (
-    <div className={classes.modalContainer}>
-      <div className={classes.modal}>
-        <Typography variant='body1' color='text'>
-          {message}
-        </Typography>
-        <Button variant='contained' onClick={onClear}>
-            close
-        </Button>
+    <div className='w-screen h-screen fixed top-0 left-0 bg-transparent grid place-items-center z-50'>
+      <div className='w-2/3 md:w-1/2 lg:w-500 h-400 bg-slate-900 border-1 border-white p-4 drop-shadow-xl'>
+        <div className='h-300'>
+          <p className='text-white font-medium'>
+            {message}
+          </p>
+        </div>
+        <div className='flex items-center justify-between p-2'>
+          <button type='button' className='w-16 px-2 py-1 my-2 bg-white text-green-900 font-semibold border-1 border-white relative before:absolute before:-top-2 before:-left-2 before:border-1 before:border-white before:w-full before:h-full hover:before:-top-1 hover:before:-left-1 before:duration-300 before:ease-in-out' onClick={onConfirm}>
+            Ok
+          </button>
+          <button type='button' className='w-16 px-2 py-1 my-2 bg-white text-red-900 font-semibold border-1 border-white relative before:absolute before:-top-2 before:-left-2 before:border-1 before:border-white before:w-full before:h-full hover:before:-top-1 hover:before:-left-1 before:duration-300 before:ease-in-out' onClick={onClear}>
+            Cancel
+          </button>
+        </div>
       </div>
     </div>
   )

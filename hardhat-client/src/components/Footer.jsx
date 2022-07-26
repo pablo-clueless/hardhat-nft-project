@@ -1,32 +1,13 @@
 import React from 'react'
-import { makeStyles } from '@mui/styles'
-import { Link } from 'react-router-dom'
 
-const useStyles = makeStyles({
-    footer: {
-        width: '100%',
-        height: '6vh',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        background: 'var(--base)',
-        color: 'var(--light)',
-        textAlign: 'center',
-        '& a': {
-          color: 'var(--dark)'
-        }
-    }
-})
+import { useProviderContext } from '../contexts/ContextProvider'
 
 const Footer = () => {
-    const classes= useStyles()
+  const { currentColor } = useProviderContext()
 
   return (
-    <div className={classes.footer}>
-      <p>
-        Made with ❤️ by
-        <Link to={'https://github.com/pablo-clueless'}> @pablo-clueless</Link>.
-      </p>
+    <div className='w-full fixed bottom-0 left-0 flex items-center justify-center bg-white text-slate-900 px-2 py-4'>
+      <p>Made with ❤️ by <a href='https://github.com/pablo-clueless' target='_blank' rel='noreferrer' style={{color: currentColor}}> @pablo-clueless</a>.</p>
     </div>
   )
 }

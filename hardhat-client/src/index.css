@@ -1,15 +1,19 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400&family=Oswald:wght@600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Share+Tech+Mono&display=swap');
 
-:root {
-  --base: #d63d51;
-  --light: #d2bdc2;
-  --dark: #262550;
-  --mid: #57555b;
-  --error: #c12110;
-  --success: #18a73e;
-  --base-font: 'Montserrat', sans-serif;
-  --bold-font: 'Oswald', sans-serif;
+::-webkit-scrollbar {
+  width: 6px;
 }
+::-webkit-scrollbar-thumb {
+  background-color: rgb(216, 216, 216);
+  border-radius: 40px;
+}
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 * {
   box-sizing: border-box;
@@ -17,22 +21,21 @@
   padding: 0;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
-  width: 100vw;
-  height: 100vh;
-  background: url('/assets/eth.svg') var(--dark) no-repeat center/cover;
-  background-size: 50% 80%;
-  background-blend-mode: exclusion;
-  font-family: var(--base-font);
-  overflow-y: hidden;
+  background: #0F172A;
+  font-family: 'Share Tech Mono', monospace;
 }
 
-a {
-  text-decoration: none;
-  color: var(--light);
+.outline-text {
+  color: #E35A44;
+  -webkit-text-stroke: 0.5px #E35A44;
+  -webkit-text-fill-color: transparent;
 }
 
-h1, h2, h3,
-h4, h5, h6 {
-  font-family: var(--bold-font);
+.textarea {
+  resize: none;
 }

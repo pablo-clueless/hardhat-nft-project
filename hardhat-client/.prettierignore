@@ -23,8 +23,7 @@ dist-ssr
 *.sln
 *.sw?
 
-# env file
+# Enviroment variables
 .env
-
-# text files
-*.txt
+.env.local
+.env.production

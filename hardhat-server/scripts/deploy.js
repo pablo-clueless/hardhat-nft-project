@@ -1,6 +1,6 @@
-const hre = require("hardhat")
+const hre = require('hardhat')
 
-async function main() {
+const main = async() => {
   const [owner] = await hre.ethers.getSigners()
   const NFTContractFactory = await hre.ethers.getContractFactory('Collectible')
   const NFTContract = await NFTContractFactory.deploy()

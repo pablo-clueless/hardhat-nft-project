@@ -1,37 +1,19 @@
 import React from 'react'
-import { Button, Stack, Toolbar, Typography } from '@mui/material'
-import { makeStyles } from '@mui/styles'
-import { Icon } from '@iconify/react'
 
-const useStyles = makeStyles({
-    nav: {
-        backgroundColor: 'var(--dark)',
-    },
-    toolbar: {
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        backgroundColor: 'transparent',
-        padding: '1rem 2rem',
-    },
-    h1: {
-        color: 'var(--base)'
-    }
-})
+import { useProviderContext } from '../contexts/ContextProvider'
 
-const Navbar = ({ isWalletConnected, logout }) => {
-    const classes = useStyles()
+const Navbar = ({isWalletConnected, logout}) => {
+  const { currentColor } = useProviderContext()
 
   return (
-    <nav className={classes.nav}>
-        <Toolbar className={classes.toolbar}>
-            <h1 className={classes.h1}>NFT Minter</h1>
-            
-            <Button variant='outlined'>
-                {isWalletConnected ? 'Wallet Connected 🔐' : 'Connect Wallet 🔓'}
-            </Button>
-        </Toolbar>
+    <nav className='w-full flex items-center justify-between p-4'>
+        <p className='md:text-2xl text-lg' style={{color: currentColor}}>NFT Miinter</p>
+        
+        {isWalletConnected ? 
+        <p className='text-base text-green-400'>Wallet Connected 🔐</p> : 
+        <p className='text-base text-red-400'>Connect Wallet 🔓</p>}
     </nav>
+
   )
 }
 

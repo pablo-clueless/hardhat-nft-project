@@ -1,10 +1,8 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import { ThemeProvider } from '@mui/material'
 
-import { Dashboard, Footer, Minted, Navbar } from './components'
-import { theme } from './theme'
-import { useEffect } from 'react'
+import { Home, NFT, Showcase } from './pages'
+import { Navbar, ThemeSettings } from './components'
 
 const App = () => {
   const [isWalletConnected, setIsWalletConnected] = useState(false)
@@ -30,18 +28,17 @@ const App = () => {
   },[])
 
   return (
-    <Router>
-      <ThemeProvider theme={theme}>
-      <Navbar isWalletConnected={isWalletConnected} />
-      <main>
+    <div className='bg-slate-900'>
+      <Router>
+        <Navbar isWalletConnected={isWalletConnected} />
         <Routes>
-          <Route path='/' element={<Dashboard isWalletConnected={isWalletConnected} minterAddress={minteraddress} connectWallet={checkIfWalletIsConnected} />} />
-          <Route path='/minted-nft' element={<Minted minterAddress={minteraddress} />} />
+          <Route path='/' element={<Home isWalletConnected={isWalletConnected} minterAddress={minteraddress} connectWallet={checkIfWalletIsConnected} />} />
+          <Route path='/nfts' element={<Showcase isWalletConnected={isWalletConnected} minterAddress={minteraddress} connectWallet={checkIfWalletIsConnected} />} />
+          <Route path='/nfts/:id' element={<NFT isWalletConnected={isWalletConnected} minterAddress={minteraddress} connectWallet={checkIfWalletIsConnected} />} />
         </Routes>
-      </main>
-      <Footer />
-      </ThemeProvider>
-    </Router>
+      </Router>
+    </div>
+    
   )
 }
 
