@@ -23,11 +23,15 @@ export const ContextProvider = ({children}) => {
     }
 
     const handleClick = (clicked) => {
-        setIsClicked({...initialState,[clicked]: !isClicked})
+        setIsClicked({...initialState,[clicked]: true})
+    }
+
+    const handleUnclick = (clicked) => {
+        setIsClicked({...initialState,[clicked]: false})
     }
     
     return (
-        <Provider.Provider value={{currentColor, currentMode, isClicked, setColor, setMode, handleClick}}>
+        <Provider.Provider value={{currentColor, currentMode, isClicked, setColor, setMode, handleClick, handleUnclick}}>
             {children}
         </Provider.Provider>
     )

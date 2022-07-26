@@ -2,12 +2,14 @@ import React, { useEffect, useState } from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 
 import { Home, NFT, Showcase } from './pages'
-import { Navbar, ThemeSettings } from './components'
+import { ColorPicker, Navbar, ThemeSettings } from './components'
+import { useProviderContext } from './contexts/ContextProvider'
 
 const App = () => {
   const [isWalletConnected, setIsWalletConnected] = useState(false)
   const [minteraddress, setMinterAddress] = useState('')
   const [openSeaProfile, setOpenSeaProfile] = useState('')
+  const { currentColor, isClicked, setColor } = useProviderContext()
 
   const checkIfWalletIsConnected = async () => {
     try {
@@ -34,11 +36,17 @@ const App = () => {
     <div className='bg-slate-900'>
       <Router>
         <Navbar isWalletConnected={isWalletConnected} />
-        <Routes>
-          <Route path='/' element={<Home isWalletConnected={isWalletConnected} minterAddress={minteraddress} connectWallet={checkIfWalletIsConnected} openSeaProfile={openSeaProfile} />} />
-          <Route path='/nfts' element={<Showcase isWalletConnected={isWalletConnected} minterAddress={minteraddress} connectWallet={checkIfWalletIsConnected} />} />
-          <Route path='/nfts/:id' element={<NFT isWalletConnected={isWalletConnected} minterAddress={minteraddress} connectWallet={checkIfWalletIsConnected} />} />
-        </Routes>
+        <ThemeSettings />
+
+        <div>
+          <Routes>
+            <Route path='/' element={<Home isWalletConnected={isWalletConnected} minterAddress={minteraddress} connectWallet={checkIfWalletIsConnected} openSeaProfile={openSeaProfile} />} />
+            <Route path='/nfts' element={<Showcase isWalletConnected={isWalletConnected} minterAddress={minteraddress} connectWallet={checkIfWalletIsConnected} />} />
+            <Route path='/nfts/:id' element={<NFT isWalletConnected={isWalletConnected} minterAddress={minteraddress} connectWallet={checkIfWalletIsConnected} />} />
+          </Routes>
+        </div>
+
+        {isClicked.themeSettings && <ColorPicker />}
       </Router>
     </div>
     
