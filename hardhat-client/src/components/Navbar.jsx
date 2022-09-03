@@ -2,7 +2,7 @@ import React from 'react'
 
 import { useProviderContext } from '../contexts/ContextProvider'
 
-const Navbar = ({isWalletConnected, logout}) => {
+const Navbar = ({isWalletConnected, connectWallet, logout}) => {
   const { currentColor } = useProviderContext()
 
   return (
@@ -10,8 +10,12 @@ const Navbar = ({isWalletConnected, logout}) => {
         <p className='md:text-2xl text-lg' style={{color: currentColor}}>NFT Miinter</p>
         
         {isWalletConnected ? 
-        <p className='text-base text-green-400'>Wallet Connected 🔐</p> : 
-        <p className='text-base text-red-400'>Connect Wallet 🔓</p>}
+        <button className='text-base text-green-400' onClick={logout}>
+          Wallet Connected 🔐
+        </button> : 
+        <button className='text-base text-red-400' onClick={connectWallet}>
+          Connect Wallet 🔓
+        </button>}
     </nav>
 
   )

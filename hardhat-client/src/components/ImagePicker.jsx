@@ -22,10 +22,10 @@ const ImagePicker = ({name,onChange,onClick,src}) => {
 }
 
 const style = {
-  wrapper: `flex flex-col items-center justify-center md:w-2/3 w-300 h-300 border-1 border-slate-500 relative`,
+  wrapper: `flex flex-col items-center justify-center md:w-500 w-200 md:h-500 h-200 border-1 border-slate-500 relative`,
   label: `text-slate-600 w-full h-full text-center grid place-items-center cursor-pointer px-2`,
   image: `w-full h-full object-cover`,
-  button: `rounded-full p-2 bg-black text-white text-2xl hover:drop-shadow-xl absolute left-1 top-1`
+  button: `rounded-full p-2 bg-black text-white text-md md:text-2xl hover:drop-shadow-xl absolute left-1 top-1`
 }
 
 export default ImagePicker

@@ -35,7 +35,7 @@ const App = () => {
   return (
     <div className=''>
       <Router>
-        <Navbar isWalletConnected={isWalletConnected} />
+        <Navbar isWalletConnected={isWalletConnected} connectWallet={checkIfWalletIsConnected} />
         <ThemeSettings />
 
         <div>

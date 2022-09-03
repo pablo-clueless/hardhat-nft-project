@@ -13,6 +13,7 @@ module.exports = {
           1: '1px',
         },
         height: {
+          50: '50px',
           100: '100px',
           200: '200px',
           300: '300px',

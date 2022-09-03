@@ -28,7 +28,7 @@ const style = {
   label: `after:content-["*"] after:text-red-600 text-slate-600 mb-2`,
   inputWrapper: `border-1 border-slate-500 focus-within:border-slate-900 p-2`,
   input: `w-full h-full outline-none bg-transparent text-black text-xl`,
-  textarea: `w-full h-100 outline-none bg-transparent text-black text-xl leading-4 textarea`
+  textarea: `w-full h-50 md:h-100 outline-none bg-transparent text-black text-xl leading-4 textarea`
 }
 
 export default InputField
