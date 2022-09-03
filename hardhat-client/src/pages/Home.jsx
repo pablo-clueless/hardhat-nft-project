@@ -110,7 +110,7 @@ const Home = ({isWalletConnected, minterAddress,connectWallet,openSeaProfile}) =
 
 const style = {
     wrapper: `w-full flex flex-col items-center`,
-    headerContainer: `text-center mt-4 mb-12`,
+    headerContainer: `text-center mt-4 mb-8 md:mb-12`,
     title: `text-xl`,
     address: `md:text-2xl text-sm`,
     form: `md:w-1/2 sm:w-300 w-full flex flex-col items-center justify-center gap-4 px-4 md:px-0`,

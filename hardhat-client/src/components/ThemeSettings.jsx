@@ -7,8 +7,8 @@ const ThemeSettings = () => {
   const { currentColor, handleClick } = useProviderContext()
 
   return (
-    <div className='fixed bottom-16 right-2 z-50 cursor-pointer' onClick={() => handleClick('themeSettings')}>
-      <div className='rounded-full p-2 bg-white' style={{color: currentColor}}>
+    <div className='fixed bottom-4 right-4 z-50 cursor-pointer' onClick={() => handleClick('themeSettings')}>
+      <div className='rounded-full p-2 bg-white text-xl md:text-2xl' style={{color: currentColor}}>
         <FiSettings />
       </div>
     </div>
