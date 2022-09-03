@@ -26,8 +26,12 @@ html {
 }
 
 body {
-  background: #0F172A;
+  /* background: #0F172A; */
   font-family: 'Share Tech Mono', monospace;
+}
+
+input:-webkit-autofill {
+  transition: background-color 5000s ease-in-out 0s;
 }
 
 .outline-text {

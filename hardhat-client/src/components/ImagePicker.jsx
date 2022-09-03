@@ -1,25 +1,31 @@
 import React from 'react'
 import { FiTrash } from 'react-icons/fi'
 
-const ImagePicker = ({isValid,name,onChange,onClick,src}) => {
-
+const ImagePicker = ({name,onChange,onClick,src}) => {
   return (
-    <div className='flex flex-col items-center justify-center md:w-2/3 w-300 h-300 border-1 border-white relative'>
-        {!isValid ?
-        <label className='text-slate-400 w-full h-full text-center grid place-items-center cursor-pointer px-2'>
+    <div className={style.wrapper}>
+        {src === null ?
+        <label className={style.label}>
             <p>Upload file</p>
-            <i>.png, .jpg, .jpeg, .svg, .webp & .gif only.</i>
+            <i>.png, .jpg, .jpeg, .svg & .gif only.</i>
             <input  type="file" name={name} onChange={onChange} className='hidden' />
         </label>
         :
         <>
-        <img src={src} alt={name} className='w-full h-full object-cover' />
-        <button type='button' onClick={onClick} className='rounded-full p-2 bg-slate-200 text-black hover:drop-shadow-xl absolute left-1 top-1'>
+        <img src={src} alt={name} className={style.image} />
+        <button type='button' onClick={onClick} className={style.button}>
           <FiTrash />
         </button>
         </>}
     </div>
   )
+}
+
+const style = {
+  wrapper: `flex flex-col items-center justify-center md:w-2/3 w-300 h-300 border-1 border-slate-500 relative`,
+  label: `text-slate-600 w-full h-full text-center grid place-items-center cursor-pointer px-2`,
+  image: `w-full h-full object-cover`,
+  button: `rounded-full p-2 bg-black text-white text-2xl hover:drop-shadow-xl absolute left-1 top-1`
 }
 
 export default ImagePicker

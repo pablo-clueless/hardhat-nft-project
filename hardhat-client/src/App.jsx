@@ -19,7 +19,7 @@ const App = () => {
         setIsWalletConnected(true)
         setMinterAddress(account)
 
-        setOpenSeaProfile(`https://testnet.opensea.io/${account}?tab=activity`)
+        setOpenSeaProfile(`https://testnets.opensea.io/${account}?tab=activity`)
       } else {
         setError('Please install a MetaMask wallet to use our bank.')
       }
@@ -33,7 +33,7 @@ const App = () => {
   },[])
 
   return (
-    <div className='bg-slate-900'>
+    <div className=''>
       <Router>
         <Navbar isWalletConnected={isWalletConnected} />
         <ThemeSettings />
