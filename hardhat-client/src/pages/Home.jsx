@@ -80,7 +80,7 @@ const Home = ({isWalletConnected, minterAddress,connectWallet,openSeaProfile}) =
   return (
     <>
     {status && <Alert message={status} onClose={() => setStatus(null)} />}
-    {success && <Modal title='Minting Complete' address={success.to} hash={success.transactionHash} />}
+    {success && <Modal title='Minting Complete' address={success.to} hash={success.transactionHash} onClose={() => setSuccess(null)} />}
     <div className={style.wrapper}>
         <div className={style.headerContainer}>
             <p className={style.title}>Your ETH Address</p>
